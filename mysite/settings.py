@@ -19,6 +19,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '2c6el8-v1g8h*75fzp#&h)v4-poprer@^3l#r1@7-t1r=wje^0'
 
+DEBUG = False
+
+TEMPLATE_DEBUG = False
 
 # Application definition
 
@@ -77,16 +80,25 @@ USE_TZ = False
 STATIC_URL = '/static/'
 
 
+# Parse database configuration from $DATABASE_URL
 import dj_database_url
-DATABASES['default'] = dj_database_url.config()
+DATABASES['default'] =  dj_database_url.config()
 
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+# Allow all host headers
 ALLOWED_HOSTS = ['*']
 
+# Static asset configuration
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = 'staticfiles'
+STATIC_URL = '/static/'
 
-DEBUG = False
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 try:
     from .local_settings import *
